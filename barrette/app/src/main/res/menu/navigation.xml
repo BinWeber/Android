@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_child"
+        android:icon="@drawable/ic_child_balck_24dp"
+        android:title="@string/title_child" />
+
+    <item
+        android:id="@+id/navigation_adult"
+        android:icon="@drawable/ic_adult_black_24dp"
+        android:title="@string/title_adult" />
+
+    <item
+        android:id="@+id/navigation_older"
+        android:icon="@drawable/ic_older_black_24dp"
+        android:title="@string/title_older" />
+
+</menu>
