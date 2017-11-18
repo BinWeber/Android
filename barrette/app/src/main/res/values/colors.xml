@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#00796B</color>
     <color name="colorAccent">#FF5252</color>
 
+    <color name="colorRegisterDark">#37396C</color>
+    <color name="colorLoginDark">#FDB5B8</color>
+
     <color name="white">#ffffff</color>
     <!-- 白色 -->
     <color name="black">#000</color>

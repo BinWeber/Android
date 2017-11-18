@@ -1,5 +1,6 @@
 package top.binweber.barrette;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -8,12 +9,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.joker.annotation.PermissionsGranted;
+import com.joker.annotation.PermissionsRationale;
+import com.joker.api.Permissions4M;
 
 import java.util.Set;
 
@@ -30,6 +37,8 @@ public class BluetoothConnectActivity extends Activity {
     private BluetoothAdapter mBtAdapter;
 
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
+
+    public static final int LOCATION_CODE = 9;
 
 
     @Override
@@ -64,6 +73,18 @@ public class BluetoothConnectActivity extends Activity {
 
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
 
+        if (!mBtAdapter.isEnabled()) {
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableIntent, MainActivity.REQUEST_ENABLE_BT);
+        }
+
+        Permissions4M.get(BluetoothConnectActivity.this)
+                .requestForce(true)
+                .requestPageType(Permissions4M.PageType.MANAGER_PAGE)
+                .requestPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+                .requestCodes(LOCATION_CODE)
+                .request();
+
         Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
         if(pairedDevices.size() > 0){
             findViewById(R.id.title_paired_devices).setVisibility(View.VISIBLE);
@@ -74,6 +95,16 @@ public class BluetoothConnectActivity extends Activity {
             String noDevices = getResources().getText(R.string.none_found).toString();
             pairedDevicesArrayAdapter.add(noDevices);
         }
+    }
+
+    @PermissionsGranted(LOCATION_CODE)
+    public void granted() {
+        Toast.makeText(BluetoothConnectActivity.this, R.string.location_enabled, Toast.LENGTH_SHORT).show();
+    }
+
+    @PermissionsRationale(LOCATION_CODE)
+    public void rationale() {
+        Toast.makeText(BluetoothConnectActivity.this, R.string.location_rational, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -133,6 +164,13 @@ public class BluetoothConnectActivity extends Activity {
             finish();
         }
     };
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[]
+            grantResults) {
+        Permissions4M.onRequestPermissionsResult(BluetoothConnectActivity.this, requestCode, grantResults);
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 
 
 }

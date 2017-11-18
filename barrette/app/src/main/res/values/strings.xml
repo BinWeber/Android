@@ -1,10 +1,39 @@
 <resources>
     <string name="app_name">乐随</string>
+    <string name="account">乐随账号登录</string>
+    <string name="account_later">立即开始</string>
+    <string name="forgot_password">忘记密码？</string>
+
+    <string name="phone_number">手机号</string>
+    <string name="verification_send">发送验证码</string>
+    <string name="verfication_number">验证码</string>
+
+    <string name="logo_text">L</string>
+    <string name="logout">注销</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="or">OR</string>
+    <string name="username">用户名</string>
+    <string name="submit">提交</string>
+    <string name="password">密码</string>
+    <string name="password_again">确认密码</string>
+    <string name="error_invalid_password">密码大于4位</string>
+    <string name="error_incorrect_password">密码错误</string>
+    <string name="error_field_required">这个是必填项</string>
+    <string name="ensurelogout">确定注销？</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="user">用户组</string>
+    <string name="others">其他</string>
     <string name="title_child">儿童</string>
     <string name="title_adult">成人</string>
     <string name="title_older">老人</string>
+    <string name="title_special">特殊人群</string>
     <string name="bluetooth">蓝牙</string>
     <string name="about">关于</string>
+    <string name="ensure">确定</string>
     <string name="cancel">取消</string>
     <string name="about_app">关于乐随</string>
     <string name="bt_enabled_leaving">蓝牙已打开</string>
@@ -23,7 +52,9 @@
     <string name="connect_bad">设备连接失败</string>
     <string name="unknown_service">未知服务</string>
     <string name="unknown_characteristic">未知特征量</string>
-
+    <string name="states">状态</string>
+    <string name="store">商城</string>
+    <string name="cardname1">温度变化</string>
 
     <string name="child_tmp_1">若为新生儿请爸爸妈妈们注意给宝宝保暖，避免影响新生儿代谢和血液循环。</string>
     <string name="child_tmp_2">孩子体温正常，家长可放心带孩子玩耍、学习。</string>

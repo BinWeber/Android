@@ -8,10 +8,4 @@
         android:title="@string/bluetooth"
         app:showAsAction="ifRoom"/>
 
-    <item
-        android:id="@+id/toolbar_about"
-        android:icon="@mipmap/ic_about"
-        android:title="@string/about"
-        app:showAsAction="ifRoom"/>
-
 </menu>

@@ -1,6 +1,5 @@
 package top.binweber.barrette;
 
-import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -18,8 +17,10 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -28,35 +29,36 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.BounceInterpolator;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.joker.annotation.PermissionsGranted;
-import com.joker.annotation.PermissionsRationale;
-import com.joker.api.Permissions4M;
+
+import com.avos.avoscloud.AVUser;
+import com.db.chart.animation.Animation;
+import com.db.chart.model.LineSet;
+import com.db.chart.renderer.AxisRenderer;
+import com.db.chart.tooltip.Tooltip;
+import com.db.chart.view.LineChartView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String TAG = "MainActivity";
 
-    private StringBuffer sbValues;
-
-    private static final int REQUEST_ENABLE_BT = 1;
-    private static final int REQUEST_CONNECT_DEVICE = 2;
+    public static final int REQUEST_ENABLE_BT = 1;
+    public static final int REQUEST_CONNECT_DEVICE = 2;
 
     private TextView temp_text;
     private TextView qua_text;
 
     private CardView temp_View;
     private CardView qua_View;
-
-    public static final int LOCATION_CODE = 9;
 
     private BluetoothAdapter mBluetoothAdapter = null;
     private BluetoothDevice romoteDevice = null;
@@ -70,112 +72,85 @@ public class MainActivity extends AppCompatActivity {
     private double temp_ave;
     private int qua;
 
-    private LineChartView mLineChartView;
-    private List<LineChartView.ItemBean> mItems;
+    private top.binweber.barrette.LineChartView mLineChartView;
+    private int[] tempNum;
+    private List<top.binweber.barrette.LineChartView.ItemBean> mItems;
     private int[] shadeColors;
 
+
     private TempControlView tempControl;
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_child:
-                    if(connect_status_bit){
-                        temp_View.setVisibility(View.VISIBLE);
-                        if(36.0 >= temp){
-                            temp_text.setText(R.string.child_tmp_1);
-                        }else if(36.2 < temp && temp <= 37.5){
-                            temp_text.setText(R.string.child_tmp_2);
-                        }else if(37.8 < temp && temp <= 38.5){
-                            temp_text.setText(R.string.child_tmp_3 + "\n" + R.string.child_tmp_4);
-                        }else if(temp > 38.5){
-                            temp_text.setText(R.string.child_tmp_5);
-                        }
-
-                        qua_View.setVisibility(View.VISIBLE);
-                        if(qua <= 200){
-                            qua_text.setText(R.string.child_qua_1);
-                        }else if(qua > 200 && qua <= 400){
-                            qua_text.setText(R.string.child_qua_2);
-                        }else if(qua > 400 && qua <= 600){
-                            qua_text.setText(R.string.child_qua_3);
-                        }else if(qua > 600 && qua <= 800){
-                            qua_text.setText(R.string.child_qua_4);
-                        }else if(qua > 800 && qua <= 1000){
-                            qua_text.setText(R.string.child_qua_5);
-                        }
-                    }
-                    return true;
-                case R.id.navigation_adult:
-                    if(connect_status_bit){
-                        temp_View.setVisibility(View.VISIBLE);
-                        if(36.3 <= temp && temp <= 37.3){
-                            temp_text.setText(R.string.adult_tmp_1);
-                        }else if(37.3 < temp && temp <= 38.5){
-                            temp_text.setText(R.string.adult_tmp_2);
-                        }else if(temp > 38.5){
-                            temp_text.setText(R.string.adult_tmp_3);
-                        }
-
-                        qua_View.setVisibility(View.VISIBLE);
-                        if(qua <= 200){
-                            qua_text.setText(R.string.adult_qua_1);
-                        }else if(qua > 200 && qua <= 400){
-                            qua_text.setText(R.string.adult_qua_2);
-                        }else if(qua > 400 && qua <= 600){
-                            qua_text.setText(R.string.adult_qua_3);
-                        }else if(qua > 600 && qua <= 800){
-                            qua_text.setText(R.string.adult_qua_4);
-                        }else if(qua > 800 && qua <= 1000){
-                            qua_text.setText(R.string.adult_qua_5);
-                        }
-                    }
-                    return true;
-                case R.id.navigation_older:
-                    if(connect_status_bit){
-                        temp_View.setVisibility(View.VISIBLE);
-                        temp_text.setTextSize(24);
-                        if(35.0 >= temp ){
-                            temp_text.setText(R.string.older_tmp_1);
-                        }else if(36.0 < temp && temp <= 37.2){
-                            temp_text.setText(R.string.older_tmp_2);
-                        }else if(temp > 37.3){
-                            temp_text.setText(R.string.older_tmp_3 + "\n" + R.string.older_tmp_4);
-                        }
-
-                        qua_View.setVisibility(View.VISIBLE);
-                        if(qua <= 200){
-                            qua_text.setText(R.string.older_qua_1);
-                        }else if(qua > 200 && qua <= 400){
-                            qua_text.setText(R.string.older_qua_2);
-                        }else if(qua > 400 && qua <= 600){
-                            qua_text.setText(R.string.older_qua_3);
-                        }else if(qua > 600 && qua <= 800){
-                            qua_text.setText(R.string.older_qua_4);
-                        }else if(qua > 800 && qua <= 1000){
-                            qua_text.setText(R.string.older_qua_5);
-                        }
-                    }
-                    return true;
-            }
-            return false;
-        }
-
-    };
+    private static int count;
+    private int[] temp_char = new int[10];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.nav_layout);
 
-        mLineChartView = (LineChartView) findViewById(R.id.lcv);
+        mLineChartView = (top.binweber.barrette.LineChartView) findViewById(R.id.lcv);
+        tempNum = new int[10];
         initData();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("");
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view) ;
+        navigationView.setNavigationItemSelectedListener(this);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        toggle.syncState();
+
+        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        final ImageView nav_head = (ImageView) headerLayout.findViewById(R.id.nav_head_image);
+
+        final TextView nav_username = (TextView) headerLayout.findViewById(R.id.nav_username);
+
+        final Button nav_login = (Button) headerLayout.findViewById(R.id.nav_login);
+
+        if (AVUser.getCurrentUser() != null) {
+            nav_head.setImageResource(R.mipmap.nav_head);
+            nav_username.setText(AVUser.getCurrentUser().getUsername());
+            nav_username.setVisibility(View.VISIBLE);
+            nav_login.setText(R.string.logout);
+
+            nav_login.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    final AlertDialog.Builder ensureBuilder = new AlertDialog.Builder(MainActivity.this);
+                    ensureBuilder.setTitle(R.string.about_app).setIcon(R.drawable.ic_launcher);
+                    final AlertDialog dialogShow = ensureBuilder.show();
+                    ensureBuilder.setMessage(R.string.ensurelogout).setPositiveButton(R.string.ensure,new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialog,int which){
+                            AVUser.getCurrentUser().logOut();
+                            nav_login.setText(R.string.login);
+                            nav_head.setImageResource(R.drawable.ic_launcher);
+                            nav_username.setVisibility(View.GONE);
+                            dialogShow.dismiss();
+                        }
+                    });
+                    ensureBuilder.setMessage(R.string.ensurelogout).setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialog,int which){
+                            dialogShow.dismiss();
+                        }
+                    });
+                    ensureBuilder.create().show();
+                }
+            });
+        }else if(AVUser.getCurrentUser() == null){
+            nav_login.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                }
+            });
+            nav_head.setImageResource(R.drawable.ic_launcher);
+            nav_username.setVisibility(View.GONE);
+        }
 
         temp_View = (CardView) findViewById(R.id.temp_tip_card);
         qua_View = (CardView) findViewById(R.id.qua_tip_card);
@@ -187,11 +162,8 @@ public class MainActivity extends AppCompatActivity {
 
         tempControl = (TempControlView) findViewById(R.id.temp_control);
         tempControl.setAngleRate(3);
-        tempControl.setTemp(0, 21, 0.0);
+        tempControl.setTemp(0, 21, 0);
 
-
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
             Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
@@ -204,27 +176,127 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
         }
 
-        sbValues = new StringBuffer();
-
         Intent intentService = new Intent(this,BluetoothService.class);
         startService(intentService);
-
-        Permissions4M.get(MainActivity.this)
-                .requestForce(true)
-                .requestPageType(Permissions4M.PageType.MANAGER_PAGE)
-                .requestPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
-                .requestCodes(LOCATION_CODE)
-                .request();
     }
 
-    @PermissionsGranted(LOCATION_CODE)
-    public void granted() {
-        Toast.makeText(MainActivity.this, R.string.location_enabled, Toast.LENGTH_SHORT).show();
-    }
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        item.setCheckable(true);
+        item.setChecked(true);
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
 
-    @PermissionsRationale(LOCATION_CODE)
-    public void rationale() {
-        Toast.makeText(MainActivity.this, R.string.location_rational, Toast.LENGTH_SHORT).show();
+        if (id == R.id.nav_adult ){
+            if(tempControl.getTemp() > 0){
+                temp = tempControl.getTemp();
+                temp_text.setTextSize(20);
+                temp_View.setVisibility(View.VISIBLE);
+                if(36.3 <= temp && temp <= 37.3){
+                    temp_text.setText(R.string.adult_tmp_1);
+                }else if(37.3 < temp && temp <= 38.5){
+                    temp_text.setText(R.string.adult_tmp_2);
+                }else if(temp > 38.5){
+                    temp_text.setText(R.string.adult_tmp_3);
+                }else{
+                    temp_View.setVisibility(View.INVISIBLE);
+                }
+
+                qua_View.setVisibility(View.VISIBLE);
+                qua_text.setTextSize(20);
+                if(qua <= 200){
+                    qua_text.setText(R.string.adult_qua_1);
+                }else if(qua > 200 && qua <= 400){
+                    qua_text.setText(R.string.adult_qua_2);
+                }else if(qua > 400 && qua <= 600){
+                    qua_text.setText(R.string.adult_qua_3);
+                }else if(qua > 600 && qua <= 800){
+                    qua_text.setText(R.string.adult_qua_4);
+                }else if(qua > 800 && qua <= 1000){
+                    qua_text.setText(R.string.adult_qua_5);
+                }
+            }
+        } else if (id == R.id.nav_child) {
+            if(tempControl.getTemp() > 0){
+                temp = tempControl.getTemp();
+                temp_text.setTextSize(20);
+                temp_View.setVisibility(View.VISIBLE);
+                if(36.0 >= temp){
+                    temp_text.setText(R.string.child_tmp_1);
+                }else if(36.2 < temp && temp <= 37.5){
+                    temp_text.setText(R.string.child_tmp_2);
+                }else if(37.8 < temp && temp <= 38.5){
+                    temp_text.setText(R.string.child_tmp_3);
+                }else if(temp > 38.5){
+                    temp_text.setText(R.string.child_tmp_5);
+                }else{
+                    temp_View.setVisibility(View.INVISIBLE);
+                }
+
+                qua_View.setVisibility(View.VISIBLE);
+                qua_text.setTextSize(20);
+                if(qua <= 200){
+                    qua_text.setText(R.string.child_qua_1);
+                }else if(qua > 200 && qua <= 400){
+                    qua_text.setText(R.string.child_qua_2);
+                }else if(qua > 400 && qua <= 600){
+                    qua_text.setText(R.string.child_qua_3);
+                }else if(qua > 600 && qua <= 800){
+                    qua_text.setText(R.string.child_qua_4);
+                }else if(qua > 800 && qua <= 1000){
+                    qua_text.setText(R.string.child_qua_5);
+                }
+            }
+
+        } else if (id == R.id.nav_older) {
+            if(tempControl.getTemp() > 0){
+                temp = tempControl.getTemp();
+                temp_View.setVisibility(View.VISIBLE);
+                temp_text.setTextSize(25);
+                if(35.0 >= temp){
+                    temp_text.setText(R.string.older_tmp_1);
+                }else if(36.0 < temp && temp <= 37.2){
+                    temp_text.setText(R.string.older_tmp_2);
+                }else if(temp > 37.3){
+                    temp_text.setText(R.string.older_tmp_3 + "\n");
+                }else{
+                    temp_View.setVisibility(View.INVISIBLE);
+                }
+
+                qua_View.setVisibility(View.VISIBLE);
+                qua_text.setTextSize(25);
+                if(qua <= 200){
+                    qua_text.setText(R.string.older_qua_1);
+                }else if(qua > 200 && qua <= 400){
+                    qua_text.setText(R.string.older_qua_2);
+                }else if(qua > 400 && qua <= 600){
+                    qua_text.setText(R.string.older_qua_3);
+                }else if(qua > 600 && qua <= 800){
+                    qua_text.setText(R.string.older_qua_4);
+                }else if(qua > 800 && qua <= 1000){
+                    qua_text.setText(R.string.older_qua_5);
+                }
+            }
+
+        } else if (id == R.id.nav_special) {
+
+        } else if (id == R.id.nav_store){
+
+        } else if (id == R.id.nav_about) {
+            AlertDialog.Builder aboutBuilder = new AlertDialog.Builder(MainActivity.this);
+            aboutBuilder.setTitle(R.string.about_app).setIcon(R.drawable.ic_launcher);
+            aboutBuilder.setMessage("设备名:"+ Build.DEVICE + "\n" + "SDK版本：" + Build.VERSION.SDK_INT + "\n" + "版本号：V2.0.0(171117)").setPositiveButton(R.string.cancel,new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialog,int which){
+                }
+            });
+            aboutBuilder.create().show();
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     public void onActivityResult(int  requestCode,int resultCode,Intent data){
@@ -286,16 +358,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent bluetoothIntent = new Intent(MainActivity.this,BluetoothConnectActivity.class);
                 startActivityForResult(bluetoothIntent,REQUEST_CONNECT_DEVICE);
                 break;
-            case R.id.toolbar_about:
-                AlertDialog.Builder aboutBuilder = new AlertDialog.Builder(MainActivity.this);
-                aboutBuilder.setTitle(R.string.about_app).setIcon(R.drawable.ic_launcher);
-                aboutBuilder.setMessage("设备名:"+ Build.DEVICE + "\n" + "SDK版本：" + Build.VERSION.SDK_INT + "\n" + "软件版本：1.0").setPositiveButton(R.string.cancel,new DialogInterface.OnClickListener(){
-                    @Override
-                    public void onClick(DialogInterface dialog,int which){
-                    }
-                });
-                aboutBuilder.create().show();
-                break;
         }
         return true;
     }
@@ -324,10 +386,30 @@ public class MainActivity extends AppCompatActivity {
             String tempS[] = res.split(",");
             temp= (double)Integer.valueOf(tempS[0]).intValue()/10;
             temp_ave = (double) Integer.valueOf(tempS[1]).intValue()/10;
-            int qua = Integer.valueOf(tempS[2]).intValue();
+            qua = Integer.valueOf(tempS[2]).intValue();
+            temp_char[count] = (int) temp;
+            if(count < 9) {
+                tempNum[count] = (int)temp;
+                count = count + 1;
+            }else{
+                initData();
+                count = 0;
+                setData();
+            }
+
             tempControl.setTemp(19, 40, temp);
             tempControl.setTitle("平均温度："+ temp_ave + "℃");
-            tempControl.setAir("空气质量:" + qua);
+            if(qua <= 200){
+                tempControl.setAir("空气质量:优");
+            }else if(qua > 200 && qua <= 400){
+                tempControl.setAir("空气质量:良好");
+            }else if(qua >400 && qua <= 600){
+                tempControl.setAir("空气质量:轻度污染");
+            }else if(qua > 600 && qua <= 800){
+                tempControl.setAir("空气质量:中度污染");
+            }else if(qua > 800 && qua <= 1000){
+                tempControl.setAir("空气质量:重度污染");
+            }
         }
 
     }
@@ -386,29 +468,46 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(mServiceConnection);
         mBluetoothService = null;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[]
-            grantResults) {
-        Permissions4M.onRequestPermissionsResult(MainActivity.this, requestCode, grantResults);
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private void initData() {
         mItems = new ArrayList<>();
-        mItems.add(new LineChartView.ItemBean(1489507200, 37));
-        mItems.add(new LineChartView.ItemBean(1489593600, 39));
-        mItems.add(new LineChartView.ItemBean(1489680000, 26));
-        mItems.add(new LineChartView.ItemBean(1489766400, 25));
-        mItems.add(new LineChartView.ItemBean(1489852800, 26));
-        mItems.add(new LineChartView.ItemBean(1489939200, 19));
-        mItems.add(new LineChartView.ItemBean(1490025600, 23));
-        mItems.add(new LineChartView.ItemBean(1490112000, 34));
-        mItems.add(new LineChartView.ItemBean(1490198400, 39));
-        mItems.add(new LineChartView.ItemBean(1490284800, 17));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1489507200, 0));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1489593600, 0));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1489680000, 0));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1489766400, 0));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1489852800, 0));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1489939200, 0));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1490025600, 0));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1490112000, 0));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1490198400, 0));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1490284800, 0));
+
+        shadeColors= new int[]{
+                Color.argb(100, 255, 86, 86), Color.argb(15, 255, 86, 86),
+                Color.argb(0, 255, 86, 86)};
+
+        //  设置折线数据
+        mLineChartView.setItems(mItems);
+        //  设置渐变颜色
+        mLineChartView.setShadeColors(shadeColors);
+        //  开启动画
+        mLineChartView.startAnim(mLineChartView,2000);
+    }
+
+    private void setData() {
+        mItems = new ArrayList<>();
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1489507200, tempNum[0]));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1489593600, tempNum[1]));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1489680000, tempNum[2]));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1489766400, tempNum[3]));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1489852800, tempNum[4]));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1489939200, tempNum[5]));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1490025600, tempNum[6]));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1490112000, tempNum[7]));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1490198400, tempNum[8]));
+        mItems.add(new top.binweber.barrette.LineChartView.ItemBean(1490284800, tempNum[9]));
 
         shadeColors= new int[]{
                 Color.argb(100, 255, 86, 86), Color.argb(15, 255, 86, 86),
