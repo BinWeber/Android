@@ -1,0 +1,91 @@
+<resources>
+    <string name="app_name">乐随</string>
+    <string name="account">乐随账号登录</string>
+    <string name="account_later">立即开始</string>
+    <string name="forgot_password">忘记密码？</string>
+
+    <string name="phone_number">手机号</string>
+    <string name="verification_send">发送验证码</string>
+    <string name="verfication_number">验证码</string>
+
+    <string name="logo_text">L</string>
+    <string name="logout">注销</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="or">OR</string>
+    <string name="username">用户名</string>
+    <string name="submit">提交</string>
+    <string name="password">密码</string>
+    <string name="password_again">确认密码</string>
+    <string name="error_invalid_password">密码大于4位</string>
+    <string name="error_incorrect_password">密码错误</string>
+    <string name="error_field_required">这个是必填项</string>
+    <string name="ensurelogout">确定注销？</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="user">用户组</string>
+    <string name="others">其他</string>
+    <string name="title_child">儿童</string>
+    <string name="title_adult">成人</string>
+    <string name="title_older">老人</string>
+    <string name="title_special">特殊人群</string>
+    <string name="bluetooth">蓝牙</string>
+    <string name="about">关于</string>
+    <string name="ensure">确定</string>
+    <string name="cancel">取消</string>
+    <string name="about_app">关于乐随</string>
+    <string name="bt_enabled_leaving">蓝牙已打开</string>
+    <string name="bt_not_enabled_leaving">蓝牙未打开！</string>
+    <string name="title_paired_devices">已配对设备</string>
+    <string name="title_other_devices">其他可用设备</string>
+    <string name="button_scan">扫描设备</string>
+    <string name="select_device">选择设备</string>
+    <string name="location_enabled">位置服务已开启</string>
+    <string name="location_not_enabled">位置服务未开启</string>
+    <string name="location_rational">请开启位置服务</string>
+    <string name="none_found">未发现可用设备</string>
+    <string name="scanning">正在扫描...</string>
+    <string name="ble_not_supported">此设备不支持BLE</string>
+    <string name="connect_successful">设备连接成功</string>
+    <string name="connect_bad">设备连接失败</string>
+    <string name="unknown_service">未知服务</string>
+    <string name="unknown_characteristic">未知特征量</string>
+    <string name="states">状态</string>
+    <string name="store">商城</string>
+    <string name="cardname1">温度变化</string>
+
+    <string name="child_tmp_1">若为新生儿请爸爸妈妈们注意给宝宝保暖，避免影响新生儿代谢和血液循环。</string>
+    <string name="child_tmp_2">孩子体温正常，家长可放心带孩子玩耍、学习。</string>
+    <string name="child_tmp_3">若为5岁以下宝宝，请家长注意孩子是否具有手足口症状，比如手足掌及口腔内出现红疹，若出现类似情况请详细询问医生。</string>
+    <string name="child_tmp_4">家长不用给孩子做退热处理，尽量选用物理降温、温水擦浴等方法。</string>
+    <string name="child_tmp_5">家长需要给孩子采用相应的药物退热措施，多饮水。</string>
+
+    <string name="child_qua_1">当前所处位置空气不错，如果条件允许，可以带孩子在这里玩耍学习。</string>
+    <string name="child_qua_2">当前环境空气良好，可以正常在此处带孩子活动，对易敏感的宝宝，家长尽量做一些防护措施。</string>
+    <string name="child_qua_3">当前所处区域的空气较差，家长朋友们请给宝宝做好防护措施，减少在此处的活动。</string>
+    <string name="child_qua_4">当前环境如果是室外，请带着宝宝尽量在该区域的室内活动。如若是室内，则请做好防护措施，缩短带宝宝在此处逗留的时间。对于易敏感的宝宝，请家长带孩子远离此处地方，以免宝宝呼吸不畅。</string>
+    <string name="child_qua_5">请家长朋友带孩子远离此处，避免孩子长时间呆在此处引起呼吸道疾病，请记得给孩子带上小口罩，做短期的防护。</string>
+
+    <string name="adult_tmp_1">体温正常，多注意运动，饮食生活规律，继续保持好的身体，亲，fighting！</string>
+    <string name="adult_tmp_2">目前身体处于低热状态，请亲记得多饮水，如果出现感冒、咳嗽等症状请及时找医生、对症下药，切勿滥用抗生素哦。</string>
+    <string name="adult_tmp_3">请亲在遗嘱下服用退烧药，长时间高热不退，望亲及时去医院治疗，以免出现脱水、昏厥、脑部受损等异常情况，身体是革命的本钱哦。</string>
+
+    <string name="adult_qua_1">当前所处位置空气不错，伸开手臂做做运动吧，亲，正是奋斗的好时候，要强健体魄哦！</string>
+    <string name="adult_qua_2">当前环境空气良好，这样的环境依然适合运动和居住哦。</string>
+    <string name="adult_qua_3">当前所处区域的空气有些差，同志们，运动是必要的，但是室外运动遇此种环境记得加一些防护措施哦。</string>
+    <string name="adult_qua_4">当前环境如果是室外，请尽量在该区域的室内活动。如若是室内，则请做好防护措施，缩短在此处逗留的时间。提醒易敏感和有呼吸道疾病的朋友们，切记切记防护。</string>
+    <string name="adult_qua_5">当前环境已经不适合长时间逗留，若是在室外，尽量转移室内活动，若是室内，请尽快远离，避免有毒气体损伤身体器官，照顾好自己。</string>
+
+    <string name="older_tmp_1">老人体温过低，若出现嗜睡、无精打采、面色苍白、面部肿胀等症状，需地方是否出现了低温症，低温症在冬季是高发期，一经发现，及时治疗。</string>
+    <string name="older_tmp_2">老人体温正常，可以多出门做做运动，有益身体健康。</string>
+    <string name="older_tmp_3">子女们需要引起注意，需带老人去医院检查下身体是否因感染出现炎症。</string>
+    <string name="older_tmp_4">老人感染后出现炎症，通常发热反应较慢，而且热度低，退热也慢。当老人热度高时，容易引起人们的重视，但如果出现低热，常常会被忽略，所以要引起足够的重视。老年人一旦出现发热，常提示患有严重的感染。因此，老年人发热切不可麻痹大意，要尽快查明其原因，以求得及时正确的治疗。</string>
+
+    <string name="older_qua_1">当前所处位置空气不错，如果条件允许，老人们可以做一些健身运动，强身健体。</string>
+    <string name="older_qua_2">当前环境空气良好，老年人可以正常在此处活动，对有呼吸道疾病的老人，应简单做一些防护措施。</string>
+    <string name="older_qua_3">当前所处区域的空气较差，老年朋友们需做好防护措施，减少在此处的活动。</string>
+    <string name="older_qua_4">当前环境如果是室外，请尽量在该区域的室内活动。如若是室内，则请做好防护措施，缩短老人在此处逗留的时间。对于易敏感和呼吸道疾病的老人，提醒各位老年朋友尽量远离此处地方，以免出现各类不适症状。</string>
+    <string name="older_qua_5">请各位子女注意带老人远离此处。尤其有心血管疾病的老人，空气污染导致的血压升高可能会引发心脏病发作或中风。</string>
+</resources>

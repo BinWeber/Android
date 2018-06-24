@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+        <item android:title="@string/user">
+            <menu>
+                <item
+                    android:id="@+id/nav_adult"
+                    android:icon="@drawable/ic_adult_black_24dp"
+                    android:title="@string/title_adult"/>
+                <item
+                    android:id="@+id/nav_child"
+                    android:title="@string/title_child"
+                    android:icon="@drawable/ic_child_balck_24dp"/>
+                <item
+                    android:id="@+id/nav_older"
+                    android:title="@string/title_older"
+                    android:icon="@drawable/ic_older_black_24dp"/>
+                <item
+                    android:id="@+id/nav_special"
+                    android:title="@string/title_special"
+                    android:icon="@drawable/ic_special_black_24dp"/>
+            </menu>
+        </item>
+
+    <item android:title="@string/others">
+        <menu>
+            <item
+                android:id="@+id/nav_store"
+                android:icon="@drawable/ic_store"
+                android:title="@string/store"
+                />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@mipmap/ic_about"
+                android:title="@string/about_app" />
+        </menu>
+    </item>
+
+</menu>
