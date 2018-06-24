@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/shop_special"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/shop_part_1"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingBottom="10dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/shop_special_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="10dp"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/shop_special_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitXY" />
+
+    </LinearLayout>

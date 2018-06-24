@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:id="@+id/home" android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_home"
+            android:title="@string/home"
+            android:checked="true"/>
+        <item
+            android:id="@+id/nav_shop"
+            android:icon="@drawable/ic_menu_shop"
+            android:title="@string/shop" />
+        <item
+            android:id="@+id/nav_message"
+            android:icon="@drawable/ic_menu_message"
+            android:title="@string/message" />
+    </group>
+
+    <item android:title="@string/commonwave">
+        <menu>
+            <item
+                android:id="@+id/nav_recruit"
+                android:icon="@drawable/ic_menu_recruit"
+                android:title="@string/recruit" />
+            <item
+                android:id="@+id/nav_organization"
+                android:icon="@drawable/ic_menu_organization"
+                android:title="@string/organization" />
+            <item
+                android:id="@+id/nav_square"
+                android:icon="@drawable/ic_square"
+                android:title="@string/square" />
+            <item
+                android:id="@+id/nav_course"
+                android:icon="@drawable/ic_menu_course"
+                android:title="@string/course" />
+        </menu>
+    </item>
+
+</menu>

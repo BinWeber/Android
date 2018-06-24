@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">香农</string>
+    <string name="app_version">1.2 (180623)</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    <string name="entropy">统计与编码</string>
+    <string name="unique">唯一可译码</string>
+    <string name="about">关于</string>
+
+    <string name="input_type">输入类型：</string>
+    <string name="input_type_1">信源信息</string>
+    <string name="input_type_2">概率值</string>
+    <string name="tip_1">在此输入要统计并编码的信息符号集，仅支持英文，区分大小写。</string>
+    <string name="tip_2">在此输入要编码的各消息符号的概率值集合，各概率值间用空格进行分隔。</string>
+    <string name="tip_3">在此输入要判断是否是唯一可译的码字集合，各码字间用空格进行分隔。</string>
+    <string name="encode_type">编码方法：</string>
+    <string name="encode_type_1">香农编码</string>
+    <string name="encode_type_2">费诺编码</string>
+    <string name="encode_type_3">哈夫曼编码</string>
+    <string name="ensure_encode">编码</string>
+    <string name="clear_text">清除</string>
+    <string name="result">结果</string>
+    <string name="judge">判断</string>
+
+    <string name="suffix">后缀集</string>
+    <string name="unique_true">唯一可译</string>
+    <string name="unique_false">非唯一可译</string>
+
+    <string name="blog"><a href='http://binweber.top'>Blog</a></string>
+    <string name="github"><a href='https://github.com/BinWeber/Android'>Github</a></string>
+</resources>
+

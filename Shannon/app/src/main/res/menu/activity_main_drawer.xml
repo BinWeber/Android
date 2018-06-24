@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group
+        android:id="@+id/icon_group_1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_entropy"
+            android:icon="@drawable/ic_encode"
+            android:checked="true"
+            android:title="@string/entropy" />
+        <item
+            android:id="@+id/nav_unique"
+            android:icon="@drawable/ic_unique"
+            android:title="@string/unique" />
+    </group>
+
+    <group
+        android:id="@+id/icon_group_2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_about"
+            android:title="@string/about" />
+    </group>
+
+</menu>
